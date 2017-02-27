@@ -3,10 +3,12 @@
  */
 
 var ship;
+var  asteroids = [];
 
 function setup(){
     createCanvas(windowWidth, windowHeight);
     ship = new Ship();
+    asteroids.push(new Asteroid);
 }
 
 function draw(){
@@ -88,3 +90,7 @@ function Ship(){
         this.heading += this.rotation;
     }
 }
+
+/*
+*
+ */
