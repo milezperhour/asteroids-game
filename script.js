@@ -151,3 +151,16 @@ function Asteroid(){
         }
     };
 }
+
+/*
+ * LASER
+ */
+
+function Laser(){
+    this.pos = createVector();
+    this.velocity = createVector();
+
+    this.update = function(){
+
+    }
+}
