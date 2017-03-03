@@ -26,6 +26,14 @@ function draw(){
     for (var i=0; i<lasers.length; i++){
         lasers[i].render();
         lasers[i].update();
+        for (var j = asteroids.length-1; j>=0; j--) {
+            if (lasers[i].hits(asteroids[j])) {
+                var newAsteroids = asteroids[j].breakup();
+                console.log(newAsteroids);
+                // asteroids.push(newAsteroid);
+                asteroids.splice(j, 1);
+            }
+        }
     }
 
     ship.render();
@@ -114,8 +122,12 @@ function Ship(){
 * ASTEROIDS
  */
 
-function Asteroid(){
-    this.pos = createVector(random(width), random(height));
+function Asteroid(pos){
+    if (pos) {
+        this.pos = pos.copy();
+    } else {
+        this.pos = createVector(random(width), random(height));
+    }
     this.velocity = p5.Vector.random2D();
     this.r = random(15, 50);
     this.total = floor(random(5, 15));
@@ -144,6 +156,13 @@ function Asteroid(){
         }
         endShape(CLOSE);
         pop();
+    };
+
+    this.breakup = function(){
+        var newA = [];
+        newA[0] = new Asteroid(this.pos);
+        newA[1] = new Asteroid(this.pos);
+        return newA;
     };
 
     this.edges = function(){
@@ -180,5 +199,12 @@ function Laser(shipPos, angle){
         strokeWeight(4);
         point(this.pos.x, this.pos.y);
         pop();
+    };
+
+    this.hits = function(asteroid){
+        var distance = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
+        if (distance < asteroid.r){
+            return true;
+        }
     }
 }
