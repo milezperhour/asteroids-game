@@ -4,6 +4,7 @@
 
 var ship;
 var  asteroids = [];
+var lasers = [];
 
 function setup(){
     createCanvas(windowWidth, windowHeight);
@@ -25,6 +26,11 @@ function draw(){
         asteroids[i].update();
         asteroids[i].edges();
     }
+
+    for (var i=0; i<lasers.length; i++){
+        lasers[i].render();
+        lasers[i].update();
+    }
 }
 
 function keyReleased(){
@@ -33,7 +39,9 @@ function keyReleased(){
 }
 
 function keyPressed(){
-    if (keyCode === RIGHT_ARROW){
+    if (key === ' '){
+        lasers.push(new Laser(ship.pos, ship.heading));
+    } else if (keyCode === RIGHT_ARROW){
         ship.setRotation(0.1);
     } else if (keyCode === LEFT_ARROW){
         ship.setRotation(-0.1);
@@ -156,11 +164,19 @@ function Asteroid(){
  * LASER
  */
 
-function Laser(){
-    this.pos = createVector();
-    this.velocity = createVector();
+function Laser(shipPos, angle){
+    this.pos = createVector(shipPos.x, shipPos.y);
+    this.velocity = p5.Vector.fromAngle(angle);
 
     this.update = function(){
+        this.pos.add(this.velocity);
+    };
 
+    this.render = function(){
+        push();
+        stroke(255);
+        strokeWeight(4);
+        point(this.pos.x, this.pos.y);
+        pop();
     }
 }
