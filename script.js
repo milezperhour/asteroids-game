@@ -16,10 +16,6 @@ function setup(){
 
 function draw(){
     background(0);
-    ship.render();
-    ship.turn();
-    ship.update();
-    ship.edges();
 
     for (var i=0; i<asteroids.length; i++){
         asteroids[i].render();
@@ -31,6 +27,11 @@ function draw(){
         lasers[i].render();
         lasers[i].update();
     }
+
+    ship.render();
+    ship.turn();
+    ship.update();
+    ship.edges();
 }
 
 function keyReleased(){
@@ -80,7 +81,7 @@ function Ship(){
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.heading + PI / 2);
-        noFill();
+        fill(0);
         stroke(255);
         triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
         pop();
@@ -167,6 +168,7 @@ function Asteroid(){
 function Laser(shipPos, angle){
     this.pos = createVector(shipPos.x, shipPos.y);
     this.velocity = p5.Vector.fromAngle(angle);
+    this.velocity.mult(10);
 
     this.update = function(){
         this.pos.add(this.velocity);
