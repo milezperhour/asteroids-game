@@ -23,7 +23,7 @@ function draw(){
         asteroids[i].edges();
     }
 
-    for (var i=0; i<lasers.length; i++){
+    for (var i=lasers.length-1; i>=0; i--){
         lasers[i].render();
         lasers[i].update();
         for (var j = asteroids.length-1; j>=0; j--) {
@@ -32,6 +32,8 @@ function draw(){
                 console.log(newAsteroids);
                 // asteroids.push(newAsteroid);
                 asteroids.splice(j, 1);
+                lasers.splice(i, 1);
+                break;
             }
         }
     }
