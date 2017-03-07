@@ -9,6 +9,7 @@ var lasers = [];
 function setup(){
     createCanvas(windowWidth, windowHeight);
     ship = new Ship();
+    //change the number of asteroids
     for (var i=0; i<5; i++){
         asteroids.push(new Asteroid());
     }
@@ -150,7 +151,8 @@ function Asteroid(pos, r){
     if (r) {
         this.r = r * 0.5;
     } else {
-        this.r = random(15, 20);
+        //change the size of the asteroids
+        this.r = random(20, 50);
     }
     this.velocity = p5.Vector.random2D();
     this.total = floor(random(5, 15));
@@ -168,7 +170,6 @@ function Asteroid(pos, r){
         stroke(255);
         noFill();
         translate(this.pos.x, this.pos.y);
-        //ellipse(0, 0, this.r * 2);
         beginShape();
         for (var i=0; i<this.total; i++){
             var angle = map(i, 0, this.total, 0, (Math.PI * 2));
