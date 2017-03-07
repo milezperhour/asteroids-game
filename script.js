@@ -1,4 +1,4 @@
-/*
+/**
 * THE SHIP
  */
 
@@ -91,6 +91,12 @@ function Ship(){
         this.velocity.mult(0.99);
     };
 
+    this.boost = function(){
+        var force = p5.Vector.fromAngle(this.heading);
+        force.mult(0.1);
+        this.velocity.add(force);
+    };
+
     this.hits = function(asteroid){
         var d = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
         if (d < this.r + asteroid.r) {
@@ -98,16 +104,10 @@ function Ship(){
         }
     };
 
-    this.boost = function(){
-        var force = p5.Vector.fromAngle(this.heading);
-        force.mult(0.1);
-        this.velocity.add(force);
-    };
-
     this.render = function(){
         push();
         translate(this.pos.x, this.pos.y);
-        rotate(this.heading + PI / 2);
+        rotate(this.heading + Math.PI / 2);
         fill(0);
         stroke(255);
         triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
@@ -137,7 +137,7 @@ function Ship(){
     }
 }
 
-/*
+/**
 * ASTEROIDS
  */
 
@@ -171,7 +171,7 @@ function Asteroid(pos, r){
         //ellipse(0, 0, this.r * 2);
         beginShape();
         for (var i=0; i<this.total; i++){
-            var angle = map(i, 0, this.total, 0, TWO_PI);
+            var angle = map(i, 0, this.total, 0, (Math.PI * 2));
             var r = this.r + this.offset[i];
             var x = r * cos(angle);
             var y = r * sin(angle);
@@ -203,7 +203,7 @@ function Asteroid(pos, r){
     };
 }
 
-/*
+/**
  * LASER
  */
 
